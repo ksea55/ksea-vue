@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app">
+
+
+    <p>
+        官网给的指令集合
+        v-text:<br>
+        更新元素的 textContent。如果要更新部分的 textContent， 需要使用 Mustache 插值。<br>
+        <span v-text="vtext"></span><br>
+        <span>{{vtext}}</span><br>
+
+        v-html<br>
+        v-show<br>
+        v-if<br>
+        v-else<br>
+        v-else-if<br>
+        v-for<br>
+        v-on<br>
+        v-bind<br>
+        v-model<br>
+        v-slot<br>
+        v-pre<br>
+        v-cloak<br>
+        v-once<br>
+        特殊 attribute<br>
+        key<br>
+
+        ref：<br>
+        <br>ref 被用来给元素或子组件注册引用信息。
+        <br>引用信息将会注册在父组件的 $refs 对象上。
+        <br>如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件
+
+    <p ref="testP">用于测试ref指令</p>
+    <button @click="testRef">testRef</button>
+
+    is<br>
+    slot<br>
+    slot-scope<br>
+    scope<br>
+    </p>
+
+</div>
+
+<script src="../js/vue.js"></script>
+
+<script>
+
+    var a = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                vtext: "v-text指令测试"
+            }
+        },
+        methods: {
+
+            testRef() {
+                var text = this.$refs.testP.textContent
+                console.dir(text)
+            }
+
+        }
+
+
+    })
+</script>
+
+</body>
+
+</html>

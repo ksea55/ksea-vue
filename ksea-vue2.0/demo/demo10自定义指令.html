@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app1">
+
+    <p>自定义指令:directive</p>
+
+    <span v-upper="msg1">{{ msg1}}</span>
+    <br>
+    <span v-upper="msg2">{{ msg2}}</span>
+
+
+    <br>
+
+    <span v-lower="msg1">{{ msg1}}</span>
+    <br>
+    <span v-lower="msg2">{{ msg2}}</span>
+
+</div>
+<div id="app2">
+
+    <p>自定义指令:directive</p>
+
+
+    <span v-upper="msg1">{{ msg1}}</span>
+    <br>
+    <span v-upper="msg2">{{ msg2}}</span>
+
+
+    <br><!--
+
+    Failed to resolve directive: lower 这里的app2使用了 app1的局部指令，它是不能使用的 因为lower定义在app1中 只能在app1中使用
+    -->
+    <span v-lower="msg1">{{ msg1}}</span>
+    <br>
+    <span v-lower="msg2">{{ msg2}}</span>
+
+
+</div>
+
+
+<script src="../js/vue.js"></script>
+
+<script>
+
+    /**是一个全局自定义指令，比如这里 它能在 aap1，与app2中都能使用
+     * Vue.directive()
+     *upper 指令名称
+     *
+     * @param el 主要是当前指令元素标签，比如这里 就是 <span v-upper="msg1"></span>中的 span标签元素
+     *@param bingding 绑定的元素它 是一个对象Object其主要有
+     * {
+     *  name: "upper"  指令名称
+        rawName: "v-upper" 调用指令的时候
+        value: "Hello World" 指令的值也就是span中的值
+        expression: "msg1" 指令中的表达式
+        modifiers: {
+        }
+        def: {
+            bind: ƒ, update
+        :
+            ƒ
+        }
+        __proto__: Object
+     * }
+     *
+     * */
+
+    Vue.directive("upper", function (el, binding, node) {
+        //这里将其转换成大写
+        el.textContent = binding.value.toUpperCase()
+    })
+
+
+    new Vue({
+        el: '#app1',
+        data: function () {
+            return {
+                msg1: "Hello World",
+                msg2: "Hello Java ! "
+
+            }
+        },
+        //定义指令集 这里是局部的只能在当前vm的实例中使用
+        directives: {
+
+            "lower": function (el, binding) {
+                el.textContent = binding.value.toLowerCase()
+            }
+        }
+
+
+    })
+    new Vue({
+        el: '#app2',
+        data: function () {
+            return {
+                msg1: "Hello World",
+                msg2: "Hello Java ! "
+            }
+        },
+
+
+    })
+</script>
+
+</body>
+
+</html>

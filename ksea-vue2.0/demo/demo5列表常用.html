@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app">
+    <p>直接加载一个数据列表:</p>
+    <p>
+    <ul>
+        <li v-for="book in books">
+            书名:{{book.name}}----价格:{{book.price}}
+        </li>
+    </ul>
+    </p>
+
+    <p>带索引号的遍历结果:</p>
+    <p>
+    <ul>
+        <li v-for="(book,index) in books">
+            {{index}} -- {{book.name}} --{{book.price}}
+        </li>
+    </ul>
+    </p>
+
+
+    <p>遍历某个对象:</p>
+    <p>
+        <ui>
+            <li v-for="(value,key,index) in books[0]">
+                index:{{index}}--key:{{key}}--value:{{value}}
+            </li>
+        </ui>
+    </p>
+
+
+    <p>综合应用操作某个数据列表及其展示:</p>
+    <p>search：<input v-model="bookname"/></p>
+    <p>
+        <ui>
+            <li v-for="(book,index) in fiterBooks" :key="index">
+                {{index}} --
+                {{book.name}}--
+                {{book.price}}--
+                <button @click="update(index)">更新</button>
+                --
+                <button @click="remove(index)">删除</button>
+            </li>
+        </ui>
+
+        <button @click="add">添加新书</button>
+        <button @click="sorttype=0">默认排序</button>
+        <button v-on:click="sorttype=1">价格降序</button>
+        <button v-on:click="sorttype=2">价格升序</button>
+
+    </p>
+
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    var a = new Vue({
+        el: '#app',
+        data: {
+            bookname: "",
+            sorttype: 0,
+            books: [
+                {name: "JAVA", price: 77},
+                {name: "C++", price: 32},
+                {name: "Python", price: 94},
+                {name: "Linux", price: 45},
+            ]
+        },
+        computed: {
+            fiterBooks() {
+
+                const {bookname, books, sorttype} = this
+
+                let tempList = books.filter(b => b.name.includes(bookname))
+
+                if (sorttype) {
+                    tempList.sort((a, b) => {
+                        if (sorttype == 1) return -(a.price - b.price)
+                        return  a.price - b.price
+                    })
+                }
+
+                return tempList
+            }
+        },
+        methods: {
+            add() {
+                this.books.push({name: "新增新书" + this.books.length, price: 55 + this.books.length})
+            },
+            update(index) {
+                this.books[index].name = "更新书名" + index
+                this.books[index].price = this.books[index].price + index
+            },
+            remove(index) {
+                this.books.splice(index, 1);
+            }
+        }
+
+    })
+</script>
+
+</body>
+
+</html>

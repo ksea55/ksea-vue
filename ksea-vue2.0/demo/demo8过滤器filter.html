@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app">
+    <p>
+        过滤器的描述:
+        Vue.js 允许你自定义过滤器，可被用于一些常见的文本格式化。
+        过滤器可以用在两个地方：双花括号插值和 v-bind 表达式 (后者从 2.1.0+ 开始支持)。
+        过滤器应该被添加在 JavaScript 表达式的尾部，
+    </p>
+
+    <p>
+        原生的时间显示:{{date}}<br>
+
+
+        当前完整时间:{{date | dateString}}<br>
+        <!--
+        特别说明
+        年月日:{{date | dateString('YYYY-MM-DD')}}<br>
+        这个在过滤器中dateString('YYYY-MM-DD') 并没有传入date，它默认就会把第一个参数传递过去
+
+        -->
+        年月日:{{date | dateString('YYYY-MM-DD')}}<br>
+        当前完整时间:{{date | dateString('HH:mm:ss')}}<br>
+    </p>
+
+</div>
+
+<script src="../js/vue.js"></script>
+<!--使用时间格式化组件-->
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
+<script>
+
+    /**
+     * 定义过滤器
+     * dateString定义过滤的名称
+     * function 回调 需要实现的过滤逻辑
+     *format='YYYY-MM-DD HH:mm:ss' ES6特殊语法，形参默认参数值，当format没传入参数的时候默认就是YYYY-MM-DD HH:mm:ss
+     */
+    Vue.filter('dateString', function (value, format = 'YYYY-MM-DD HH:mm:ss') {
+        //比如这里我们需要将一个时间进行格式化
+        return moment(value).format(format)
+    })
+
+    var a = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                date: new Date()
+            }
+        }
+        ,
+
+
+    })
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .b1 {
+            background: red;
+        }
+
+        .b2 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <p :class="bg1" class="b1">在vue中通过Class来进行样式的绑定:</p>
+        <p :style="bg2" style="background: chartreuse;">在vue中动态绑定样式是用 :style指令 其指令的值是一个对象</p>
+
+        <button v-on:click="change1">改变样式</button>
+        <button @click="change2">内联</button>
+
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        var a = new Vue({
+            el: '#app',
+            data: {
+                bg1: "",
+                bg2: {}
+            },
+            methods: {
+                change1() {
+                    this.bg1 = "b2"
+                },
+                change2() {
+                    this.bg2 = { fontSize: '30px', fontWeight: 'blod' }
+                }
+
+
+            },
+
+        })
+    </script>
+
+</body>
+
+</html>

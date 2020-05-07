@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .b1 {
+            background: red;
+        }
+
+        .b2 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <p v-if="ok">ok,显示成功!</p>
+        <p v-else>ok,显示失败!</p>
+
+        <p v-show="ok">ok，show成功了!</p>
+        <p v-show="!ok">ok，show失败了!</p>
+
+        <p><button v-on:click="ok=!ok">状态切换</button></p>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        var a = new Vue({
+            el: '#app',
+            data: {
+                ok: false
+            },
+
+        })
+    </script>
+
+</body>
+
+</html>

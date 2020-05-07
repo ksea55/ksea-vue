@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app">
+    <span>注册信息，用于模拟数据的手机,v-model</span>
+    <form @submit.prevent="register">
+        <p>用户名:<input v-model="user.username"/></p>
+        <p>密码:<input type="password" v-model="user.userpwd"/></p>
+        <p>性别:
+            <input type="radio" id="female" value="女" v-model="user.sex"/> 女
+            <input type="radio" id="male" value="男" v-model="user.sex"/> 男
+
+        </p>
+        <p>爱好:
+        <ul>
+            <li v-for="(hobby,index) in hobbys" :key="index">
+                <input :value="hobby.id" type="checkbox" v-model="user.hobbys"/> {{hobby.name}}
+            </li>
+        </ul>
+        <p>
+            所在城市:
+            <select v-model="user.city">
+                <option value="">请选择</option>
+                <option v-for="(city,index) in citys" :value="city.id" :key="index">{{city.name}}</option>
+            </select>
+        </p>
+
+        <p>
+            描述:<textarea v-model="user.desc"></textarea>
+        </p>
+
+        </p>
+        <input type="submit">
+    </form>
+
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    var a = new Vue({
+        el: '#app',
+        data: {
+            user: {
+                sex: '男',
+                hobbys: [1], //爱好是一数组，并且默认值是 篮球 所以value 的id：1
+                city: ""
+            },
+            hobbys: [
+                {id: 1, name: "篮球"},
+                {id: 2, name: "足球"},
+                {id: 3, name: "乒乓球"},
+            ],
+            citys: [
+                {id: 1, name: "武侯区"},
+                {id: 2, name: "锦江区"},
+                {id: 3, name: "金牛区"},
+                {id: 4, name: "双流区"},
+                {id: 5, name: "高新区"},
+            ]
+        },
+        methods: {
+
+            register() {
+                console.dir(this.user)
+            }
+        }
+
+    })
+</script>
+
+</body>
+
+</html>

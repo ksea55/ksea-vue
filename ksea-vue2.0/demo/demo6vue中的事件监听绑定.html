@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+<div id="app">
+
+    <p>
+        <button @click="test1">test1</button>
+    </p>
+    <p>
+        <button v-on:click="test2('hello,world')">方法中的参数传递</button>
+    </p>
+    <p>
+        <button @click="test3">获取组件的元素信息</button>
+    </p>
+
+    <p>
+        <button @click="test4('hello',$event)">参数传递与获取组件信息</button>
+        <button @click="test5('hello','world',$event)">参数传递与获取组件信息 test5</button>
+    </p>
+    <p>
+        <input @keyup="test6" v-model="name">
+    </p>
+    <p>
+        <!--vue中键盘的监控可以直接跟它的keycode，@keyup.13表示键盘监控事件并且起是enter键的时候触发-->
+        <input @keyup.13="test7" v-model="name">
+        <br/>
+        <!--同理vue中也可以直接跟键盘的名 如@keyup.enter -->
+        <input @keyup.enter="test8" v-model="name">
+
+    </p>
+    <p>
+        <span>在传统js中是如何使用事件停止冒泡</span>
+    <div :style="{backgroundColor:'green',width:'400px',height:'400px'}" @click="outer1">
+        <div :style="{backgroundColor:'red',width:'200px',height:'200px'}" @click="inner1"></div>
+    </div>
+    </p>
+
+    <p>
+        <span>在vue中是如何使用事件停止冒泡</span>
+    <div :style="{backgroundColor:'green',width:'400px',height:'400px'}" @click="outer1">
+
+        <!--在vue中直接通过@click.stop 通过.stop快速进行冒泡-->
+        <div :style="{backgroundColor:'pink',width:'200px',height:'200px'}" @click.stop="inner2"></div>
+    </div>
+    </p>
+
+    <p>
+        <span>组织事件的默认行为</span>
+
+        <span>没有阻止事件的默认行为的时候，点击百度，会打开百度的网址:</span>
+        <A href="http://www.baidu.com">点击百度</A>
+        <br/>
+        <span>原有js阻止默认事件行为:</span>
+        <A href="http://www.baidu.com" @click="stop1">点击百度</A>
+        <br/>
+
+        <span>vue阻止默认事件行为通过@click.prevent:</span>
+        <A href="http://www.baidu.com" @click.prevent="stop2()">点击百度</A>
+    </p>
+
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    var a = new Vue({
+        el: '#app',
+        data: {
+            name: ""
+        },
+        methods: {
+            test1() {
+                alert("使用@click")
+            },
+            test2(params) {
+                alert(params)
+            },
+            test3(event) {
+                //在vue中如果都没参参数，默认其实传递的是组件本身
+                let html = event.target.innerHTML
+                alert(html)
+            },
+            test4(params, event) {
+                alert(params + "------>" + event.target.innerHTML)
+            },
+            test5(p1, p2, event) {
+                alert(p1 + "----->" + "----->" + p2 + "--------->" + event.target.innerHTML)
+            },
+            test6(event) {
+
+                //当触发enter键的时候进行数据提示，这是传统模式下
+                if (event.keyCode == 13) {
+
+                    //监听键盘事件
+                    alert(this.name)
+                }
+            },
+            test7() {
+                alert(this.name)
+            },
+            test8() {
+                alert(this.name)
+            }, outer1() {
+
+                alert("outer1")
+
+            }, inner1(event) {
+                console.dir(event)
+
+                //传统组织事件冒泡
+                event.stopPropagation()
+
+                alert("inner1")
+            },
+            inner2() {
+                alert("inner1")
+            }, stop1(event) {
+                event.preventDefault()
+            }, stop2(event) {
+
+            }
+
+        }
+
+    })
+</script>
+
+</body>
+
+</html>

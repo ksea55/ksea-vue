@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        {{message}}
+        <p v-if="0">这是表达式if</p>
+
+        <p>watch监控属性:</p>
+        姓: <input v-model="fistName" />
+        名:<input v-model="lastName" />
+        <p> 通过watch监控姓名的变化:<span>{{fullName}}</span></p>
+        <p> 通过computed监控姓名的变化：<span>{{computedName}}</span></p>
+
+
+        <P>通过get与set实现双向改变:</P>
+        <div>
+            <p> name1: <input v-model="name1" /></p>
+            <p> name2: <input v-model="name2" /></p>
+        </div>
+
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        var a = new Vue({
+            el: '#app',
+            data: {
+                message: "hello Vue",
+                fullName: "",
+                fistName: "",
+                lastName: "",
+                name1: ""
+            },
+            watch: { //用于监控属性的变化
+                fistName: function (value) {
+                    this.fullName = this.fistName + this.lastName
+                },
+                lastName: function (value) {
+                    this.fullName = this.fistName + this.lastName
+                }
+
+            }, computed: {
+                computedName() {
+                    return this.fistName + this.lastName
+                },
+                //此处通过computed监控name2属性，通过起属性对象的get与set方法来达到其name1与name2进行双向绑定与改变
+                name2: {
+                    get() {
+                        return this.name1
+                    },
+                    set(value) {
+                        this.name1 = value
+                    }
+                }
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>
